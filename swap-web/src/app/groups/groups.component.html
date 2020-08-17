@@ -1,0 +1,8 @@
+<div id="app">
+  <div id="groups">
+    <div *ngFor="let group of groups | async" class="group">
+      <img class="group-icon" [src]="group.icon" />
+    </div>
+  </div>
+  <app-group></app-group>
+</div>

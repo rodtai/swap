@@ -42,10 +42,18 @@
           Sign Up
         </span>
       </button>
-      <button mat-flat-button color="primary">
-        <span class="button-label">
-          Login
+      <button mat-flat-button color="primary" (click)="login()">
+        <span
+          *ngIf="userService.getCurrentUser(); else showLogin"
+          class="button-label"
+        >
+          Go to Swap
         </span>
+        <ng-template #showLogin>
+          <span class="button-label">
+            Login
+          </span>
+        </ng-template>
       </button>
     </div>
   </div>

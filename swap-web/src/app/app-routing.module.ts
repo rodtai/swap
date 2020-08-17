@@ -1,14 +1,20 @@
-import { LandingComponent } from './landing/landing.component';
 import { NgModule } from '@angular/core';
 import {
   Routes,
   RouterModule,
   PreloadAllModules,
 } from '@angular/router';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: 'groups',
+    loadChildren: () =>
+      import('./groups/groups.module').then(m => m.GroupsModule),
+    canActivate: [AngularFireAuthGuard],
+  },
+  {
+    path: '',
     loadChildren: () =>
       import('./landing/landing.module').then(m => m.LandingModule),
   },
