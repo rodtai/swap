@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "swap-9733b": {
+      "hosting": {
+        "swap-web": [
+          "swap-9733b"
+        ]
+      }
+    }
+  }
+}
