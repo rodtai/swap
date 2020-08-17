@@ -1,14 +1,23 @@
-<div id="group">
-  <div id="top">
-    <div id="group-title">
-      <h1>Group Name</h1>
-      <mat-icon>expand_more</mat-icon>
+<div id="group-background">
+  <div id="group-container">
+    <div id="group-section">
+      <div id="group-header">
+        <h1>{{ (selectedGroup | async)?.name }}</h1>
+        <mat-icon>expand_more</mat-icon>
+      </div>
+      <div>
+        <mat-icon>settings</mat-icon>
+      </div>
     </div>
-    <div>
-      <mat-icon>settings</mat-icon>
-    </div>
-    <div>
-      <h2>Chats</h2>
+    <div id="group-channels">
+      <h2 id="group-channels-header">Channels</h2>
+      <mat-selection-list [multiple]="false">
+        <mat-list-option
+          *ngFor="let channel of groupChannels | async"
+        >
+          <span class="channel-name"># {{ channel.name }}</span>
+        </mat-list-option>
+      </mat-selection-list>
     </div>
   </div>
 </div>

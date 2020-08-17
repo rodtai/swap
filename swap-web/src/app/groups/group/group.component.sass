@@ -1,18 +1,21 @@
 $sand: #F3C98B
 
-#group
-    display: flex
+#group-background
     background-color: $sand
-    width: 208px
+    width: 260px
     height: 100vh
-    padding: 35px 26px 0 26px
-#top
+
+#group-container
     display: flex
-    margin-top: 10px
-    justify-content: space-around
+    flex-direction: column
+    padding: 35px 26px 0 26px
+
+#group-section
+    display: flex
+    justify-content: space-between
     width: 100%
 
-#group-title
+#group-header
     display: flex
     h1
         font-family: Lato
@@ -20,3 +23,25 @@ $sand: #F3C98B
         font-weight: bold
         font-size: 20px
         line-height: 24px
+
+#group-channels-header
+    font-family: Lato
+    font-style: normal
+    font-weight: bold
+    font-size: 12px
+    line-height: 14px
+    text-transform: uppercase
+    margin-bottom: 0
+
+#group-channels
+    margin-top: 30px
+    display: flex
+    flex-direction: column
+
+.channel-name
+    font-family: Lato
+    font-style: normal
+    font-weight: normal
+    font-size: 14px
+    line-height: 17px
+    padding: 1px

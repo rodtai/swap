@@ -1,8 +1,9 @@
 import { GroupService } from './../shared/services/group.service';
 import { Component, OnInit } from '@angular/core';
-import { Observable, pipe } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 import { Group } from '../shared/models/group.model';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-groups',
@@ -14,12 +15,28 @@ export class GroupsComponent implements OnInit {
 
   public groups: Observable<Group[]>;
 
-  ngOnInit(): void {
+  public selectedGroup: BehaviorSubject<Group> = new BehaviorSubject(
+    null,
+  );
+
+  public ngOnInit(): void {
     this.groups = this.groupSerivce.getGroups().pipe(
       first(),
       map(groupResponse => {
         return groupResponse.groups;
       }),
     );
+  }
+
+  public async drop(event: CdkDragDrop<Group[]>): Promise<void> {
+    moveItemInArray(
+      await this.groups.toPromise(),
+      event.previousIndex,
+      event.currentIndex,
+    );
+  }
+
+  public groupIconClicked(group: Group): void {
+    this.selectedGroup.next(group);
   }
 }

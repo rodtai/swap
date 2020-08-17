@@ -1,8 +1,16 @@
 <div id="app">
-  <div id="groups">
-    <div *ngFor="let group of groups | async" class="group">
+  <div id="groups" cdkDropList (cdkDropListDropped)="drop($event)">
+    <div
+      *ngFor="let group of groups | async"
+      class="group"
+      cdkDrag
+      (click)="groupIconClicked(group)"
+    >
       <img class="group-icon" [src]="group.icon" />
     </div>
   </div>
-  <app-group></app-group>
+  <app-group
+    *ngIf="selectedGroup | async"
+    [selectedGroup]="selectedGroup"
+  ></app-group>
 </div>
