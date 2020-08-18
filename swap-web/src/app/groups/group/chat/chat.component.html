@@ -19,3 +19,27 @@
     <mat-icon>more_vert</mat-icon>
   </button>
 </mat-toolbar>
+<div>
+  <div>
+    <img src="assets/users/phil.png" />
+  </div>
+</div>
+<mat-toolbar id="chat-input">
+  <button mat-icon-button>
+    <mat-icon>attach_file</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>keyboard_voice</mat-icon>
+  </button>
+  <textarea
+    id="message-input"
+    [placeholder]="'Message in # ' + (selectedChat | async)?.name"
+    matInput
+    cdkTextareaAutosize
+    cdkAutosizeMinRows="1"
+    cdkAutosizeMaxRows="3"
+  ></textarea>
+  <button mat-icon-button>
+    <mat-icon>sentiment_satisfied_alt</mat-icon>
+  </button>
+</mat-toolbar>

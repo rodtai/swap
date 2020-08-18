@@ -11,6 +11,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { TextFieldModule } from '@angular/cdk/text-field';
 
 @NgModule({
   declarations: [GroupsComponent, GroupComponent, ChatComponent],
@@ -23,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatToolbarModule,
     MatButtonModule,
+    TextFieldModule,
   ],
 })
 export class GroupsModule {}
