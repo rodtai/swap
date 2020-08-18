@@ -1,1 +1,21 @@
-<p>chat works!</p>
+<mat-toolbar>
+  <span id="chat-name"># {{ (selectedChat | async)?.name }}</span>
+  <button mat-icon-button>
+    <mat-icon>star_outline</mat-icon>
+  </button>
+  <span class="spacer"></span>
+  <button mat-icon-button>
+    <mat-icon>person_outline</mat-icon>
+  </button>
+  <span id="user-count">1,093</span>
+  <mat-form-field id="search" appearance="outline">
+    <input type="text" matInput placeholder="Search..." />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <button mat-icon-button>
+    <mat-icon>notifications_none</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</mat-toolbar>

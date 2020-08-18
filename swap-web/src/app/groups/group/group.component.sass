@@ -1,5 +1,10 @@
 $sand: #F3C98B
 
+:host
+    width: 100%
+    display: flex
+    flex-direction: row
+
 #group-background
     background-color: $sand
     width: 260px
@@ -13,18 +18,21 @@ $sand: #F3C98B
 #group-section
     display: flex
     justify-content: space-between
+    align-items: flex-end
     width: 100%
 
 #group-header
     display: flex
-    h1
-        font-family: Lato
-        font-style: normal
-        font-weight: bold
-        font-size: 20px
-        line-height: 24px
+    align-items: center
 
-#group-channels-header
+#group-name
+    font-family: Lato
+    font-style: normal
+    font-weight: bold
+    font-size: 20px
+    line-height: 24px
+
+#group-chats-header
     font-family: Lato
     font-style: normal
     font-weight: bold
@@ -33,12 +41,12 @@ $sand: #F3C98B
     text-transform: uppercase
     margin-bottom: 0
 
-#group-channels
+#group-chats
     margin-top: 30px
     display: flex
     flex-direction: column
 
-.channel-name
+.chat-name
     font-family: Lato
     font-style: normal
     font-weight: normal

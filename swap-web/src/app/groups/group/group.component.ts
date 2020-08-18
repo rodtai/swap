@@ -3,7 +3,7 @@ import { GroupService } from './../../shared/services/group.service';
 import { Chat } from './../../shared/models/chat.model';
 import { Group } from './../../shared/models/group.model';
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-group',
@@ -14,16 +14,23 @@ export class GroupComponent implements OnInit {
   constructor(private groupService: GroupService) {}
 
   @Input() selectedGroup: Observable<Group>;
-  public groupChannels: Observable<Chat[]>;
+  public groupChats: Observable<Chat[]>;
+  public selectedChat: BehaviorSubject<Chat> = new BehaviorSubject(
+    null,
+  );
 
   ngOnInit(): void {
     this.selectedGroup.subscribe((group: Group) => {
-      this.groupChannels = this.groupService
+      this.groupChats = this.groupService
         .getChatsForGroup(group)
         .pipe(
           first(),
           map(res => res.chats),
         );
     });
+  }
+
+  chatClicked(chat: Chat): void {
+    this.selectedChat.next(chat);
   }
 }
