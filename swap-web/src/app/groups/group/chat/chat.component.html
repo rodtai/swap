@@ -1,5 +1,5 @@
 <mat-toolbar>
-  <span id="chat-name"># {{ (selectedChat | async)?.name }}</span>
+  <span id="chat-name">#{{ (selectedChat | async)?.name }}</span>
   <button mat-icon-button>
     <mat-icon>star_outline</mat-icon>
   </button>
@@ -35,7 +35,9 @@
   </button>
   <textarea
     id="message-input"
-    [placeholder]="'Message in # ' + (selectedChat | async)?.name"
+    [(ngModel)]="currentMessage"
+    (keyup.enter)="sendMessage()"
+    [placeholder]="'Message in #' + (selectedChat | async)?.name"
     matInput
     cdkTextareaAutosize
     cdkAutosizeMinRows="1"

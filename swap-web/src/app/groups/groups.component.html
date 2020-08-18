@@ -10,6 +10,7 @@
         class="group-icon"
         [src]="group.icon"
         [matTooltip]="group.name"
+        [ngClass]="group === selectedGroup.value && 'selected-group'"
         matTooltipPosition="right"
       />
     </div>

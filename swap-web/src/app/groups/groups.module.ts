@@ -15,6 +15,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
 import { DividerComponent } from './group/chat/divider/divider.component';
 import { MessageComponent } from './group/chat/message/message.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     TextFieldModule,
     MatTooltipModule,
+    FormsModule,
   ],
 })
 export class GroupsModule {}
