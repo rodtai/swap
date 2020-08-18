@@ -1,0 +1,10 @@
+<img id="profile-pic" [src]="user.photoURL" />
+<div id="message">
+  <div id="header">
+    <span id="user-fullname">{{ user.displayName }}</span>
+    <span id="time">{{ message.date_posted | date: 'h:mm a' }}</span>
+  </div>
+  <span id="body" *ngFor="let media of message.body">
+    {{ media.type === 'text' && media.content }}
+  </span>
+</div>

@@ -19,10 +19,12 @@
     <mat-icon>more_vert</mat-icon>
   </button>
 </mat-toolbar>
-<div>
-  <div>
-    <img src="assets/users/phil.png" />
-  </div>
+<div id="scrollable-chat">
+  <!-- <app-divider text="Today"></app-divider> -->
+  <app-message
+    *ngFor="let message of messages | async"
+    [message]="message"
+  ></app-message>
 </div>
 <mat-toolbar id="chat-input">
   <button mat-icon-button>

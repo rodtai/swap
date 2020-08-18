@@ -32,4 +32,8 @@ export class UserService {
   public getCurrentUser(): User {
     return this.currentUser;
   }
+
+  public getUserById(userId: string): User {
+    return this.currentUser;
+  }
 }

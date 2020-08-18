@@ -12,9 +12,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { TextFieldModule } from '@angular/cdk/text-field';
+import { DividerComponent } from './group/chat/divider/divider.component';
+import { MessageComponent } from './group/chat/message/message.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
-  declarations: [GroupsComponent, GroupComponent, ChatComponent],
+  declarations: [
+    GroupsComponent,
+    GroupComponent,
+    ChatComponent,
+    DividerComponent,
+    MessageComponent,
+  ],
   imports: [
     CommonModule,
     GroupsRoutingModule,
@@ -25,6 +34,7 @@ import { TextFieldModule } from '@angular/cdk/text-field';
     MatToolbarModule,
     MatButtonModule,
     TextFieldModule,
+    MatTooltipModule,
   ],
 })
 export class GroupsModule {}
