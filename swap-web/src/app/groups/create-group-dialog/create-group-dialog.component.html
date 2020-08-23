@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Create your own group</h1>
+<div mat-dialog-content>
+  <p>
+    Create a group to communicate with your students, coworkers,
+    followers, teammates, or community.
+  </p>
+  <div id="group-icon-previewer">
+    <mat-form-field class="example-full-width" floatLabel="always">
+      <mat-label>Group Name</mat-label>
+      <input
+        matInput
+        placeholder="Enter a group name"
+        [(ngModel)]="groupName"
+      />
+    </mat-form-field>
+    <div id="group-icon">
+      <span id="group-icon-text">{{ groupName[0] }}</span>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true">Close</button>
+  <button mat-button [mat-dialog-close]="true" (click)="onCreate()">
+    Create
+  </button>
+</div>

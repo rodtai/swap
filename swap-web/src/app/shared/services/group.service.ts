@@ -5,6 +5,7 @@ import { Group } from './../models/group.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of, Observable, BehaviorSubject } from 'rxjs';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Injectable({
   providedIn: 'root',
@@ -90,8 +91,27 @@ export class GroupService {
     },
   ]);
 
-  public getGroups(): Observable<{ groups: Group[] }> {
-    return of({ groups: this.allGroups });
+  private groups: BehaviorSubject<Group[]> = new BehaviorSubject(
+    this.allGroups,
+  );
+
+  public getGroups(): Observable<Group[]> {
+    return this.groups;
+  }
+
+  public createGroup(groupName: string): void {
+    const groups = this.groups.value;
+    groups.push({
+      id: '123',
+      name: groupName,
+      icon: null,
+      chatIds: [],
+    });
+  }
+
+  public moveGroup(prevIndex: number, currIndex: number): void {
+    const groups = this.groups.value;
+    moveItemInArray(groups, prevIndex, currIndex);
   }
 
   public getChatsForGroup(

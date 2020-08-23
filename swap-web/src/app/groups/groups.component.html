@@ -7,12 +7,32 @@
       (click)="groupIconClicked(group)"
     >
       <img
+        *ngIf="group.icon; else defaulticon"
+        [ngClass]="group === selectedGroup.value && 'selected-group'"
         class="group-icon"
         [src]="group.icon"
         [matTooltip]="group.name"
-        [ngClass]="group === selectedGroup.value && 'selected-group'"
         matTooltipPosition="right"
       />
+      <ng-template #defaulticon>
+        <div
+          class="default-group-icon"
+          [ngClass]="
+            group === selectedGroup.value && 'selected-group'
+          "
+          [matTooltip]="group.name"
+          matTooltipPosition="right"
+        >
+          <span class="default-group-text">{{ group.name[0] }}</span>
+        </div>
+      </ng-template>
+    </div>
+    <div
+      id="create-group"
+      class="group"
+      (click)="createGroupIconClicked()"
+    >
+      <mat-icon>add</mat-icon>
     </div>
   </div>
   <app-group

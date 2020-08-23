@@ -1,9 +1,11 @@
+import { CreateGroupDialogComponent } from './create-group-dialog/create-group-dialog.component';
 import { GroupService } from './../shared/services/group.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Group } from '../shared/models/group.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-groups',
@@ -11,7 +13,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./groups.component.sass'],
 })
 export class GroupsComponent implements OnInit {
-  constructor(private readonly groupSerivce: GroupService) {}
+  constructor(
+    private readonly groupSerivce: GroupService,
+    private readonly dialog: MatDialog,
+  ) {}
 
   public groups: Observable<Group[]>;
 
@@ -21,16 +26,14 @@ export class GroupsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.groups = this.groupSerivce.getGroups().pipe(
-      first(),
       map(groupResponse => {
-        return groupResponse.groups;
+        return groupResponse;
       }),
     );
   }
 
-  public async drop(event: CdkDragDrop<Group[]>): Promise<void> {
-    moveItemInArray(
-      await this.groups.toPromise(),
+  public drop(event: CdkDragDrop<Group[]>): void {
+    this.groupSerivce.moveGroup(
       event.previousIndex,
       event.currentIndex,
     );
@@ -38,5 +41,9 @@ export class GroupsComponent implements OnInit {
 
   public groupIconClicked(group: Group): void {
     this.selectedGroup.next(group);
+  }
+
+  public createGroupIconClicked(): void {
+    this.dialog.open(CreateGroupDialogComponent);
   }
 }

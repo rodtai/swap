@@ -16,6 +16,8 @@ import { DividerComponent } from './group/chat/divider/divider.component';
 import { MessageComponent } from './group/chat/message/message.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
+import { CreateGroupDialogComponent } from './create-group-dialog/create-group-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { FormsModule } from '@angular/forms';
     ChatComponent,
     DividerComponent,
     MessageComponent,
+    CreateGroupDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +40,7 @@ import { FormsModule } from '@angular/forms';
     TextFieldModule,
     MatTooltipModule,
     FormsModule,
+    MatDialogModule,
   ],
 })
 export class GroupsModule {}

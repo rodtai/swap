@@ -11,7 +11,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
   styleUrls: ['./group.component.sass'],
 })
 export class GroupComponent implements OnInit {
-  constructor(private groupService: GroupService) {}
+  constructor(private readonly groupService: GroupService) {}
 
   @Input() selectedGroup: Observable<Group>;
   public groupChats: Observable<Chat[]>;
