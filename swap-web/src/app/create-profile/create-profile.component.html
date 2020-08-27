@@ -1,0 +1,84 @@
+<div id="create-profile-background">
+  <div id="create-profile-form" class="mat-elevation-z2">
+    <span>Create your Profile</span>
+    <div id="user-inputs">
+      <div id="text-fields">
+        <mat-form-field
+          class="text-field"
+          appearance="outline"
+          floatLabel="always"
+        >
+          <mat-label><b>Full Name</b></mat-label>
+          <input matInput [(ngModel)]="fullName" />
+        </mat-form-field>
+        <mat-form-field
+          class="text-field"
+          appearance="outline"
+          floatLabel="always"
+        >
+          <mat-label><b>Display Name</b></mat-label>
+          <input matInput [(ngModel)]="displayName" />
+          <mat-hint
+            >This could be a first name, nickname or anything you want
+            people to call you on Swap.</mat-hint
+          >
+        </mat-form-field>
+        <mat-form-field
+          class="text-field"
+          appearance="outline"
+          floatLabel="always"
+        >
+          <mat-label><b>What I do</b></mat-label>
+          <input matInput [(ngModel)]="whatIDo" />
+          <mat-hint>Let other people know what you do.</mat-hint>
+        </mat-form-field>
+      </div>
+      <div id="profile-pic-upload">
+        <span id="profile-pic-upload-label">Profile picture</span>
+        <div id="default-image">
+          <span
+            id="default-image-text"
+            *ngIf="!profilePicture; else showProfilePicture"
+            >{{ displayName && displayName[0] }}</span
+          >
+          <ng-template #showProfilePicture>
+            <img id="profile-pic" [src]="profilePicture" />
+          </ng-template>
+        </div>
+        <button
+          id="upload-image-button"
+          mat-stroked-button
+          (click)="hiddenImageUpload.click()"
+        >
+          Upload an Image
+        </button>
+        <input
+          id="image-upload"
+          #hiddenImageUpload
+          type="file"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+        />
+        <button
+          id="remove-image-button"
+          mat-stroked-button
+          color="warn"
+          [disabled]="!profilePicture"
+          (click)="removeProfilePicture()"
+        >
+          Remove Photo
+        </button>
+      </div>
+    </div>
+    <button
+      id="create-button"
+      mat-flat-button
+      color="primary"
+      [disabled]="
+        !(fullName?.trim() && displayName?.trim() && whatIDo?.trim())
+      "
+    >
+      Create
+    </button>
+  </div>
+</div>

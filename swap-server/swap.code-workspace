@@ -1,7 +1,16 @@
 {
-    "folders": [
-        {
-            "path": "/Users/rodrigotaipe/Documents/swap"
-        }
-    ]
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"cassandraWorkbench.activeClusterName": "Cluster AllowAllAuthenticator",
+		"cassandraWorkbench.activeKeyspace": [
+			[
+				"Cluster AllowAllAuthenticator",
+				"swap"
+			]
+		]
+	}
 }

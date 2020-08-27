@@ -9,5 +9,5 @@ import (
 func main() {
 	fmt.Println("Server starting...")
 	app := app.NewApp()
-	app.Start()
+	app.Start(8080)
 }

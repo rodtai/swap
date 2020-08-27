@@ -18,6 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormsModule } from '@angular/forms';
 import { CreateGroupDialogComponent } from './create-group-dialog/create-group-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UserProfileComponent } from './group/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     DividerComponent,
     MessageComponent,
     CreateGroupDialogComponent,
+    UserProfileComponent,
   ],
   imports: [
     CommonModule,

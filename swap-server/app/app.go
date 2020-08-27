@@ -1,55 +1,57 @@
 package app
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
 // An App represents all the objects used by this server app.
 type App struct {
-	groups   *[]Group
-	chats    *[]Chat
-	messages *[]Message
-	r        *mux.Router
+	router   *mux.Router
+	database *Database
+	userAuth *UserAuthenticator
 }
 
 // NewApp creates a new instance of this server app.NewApp
 func NewApp() *App {
-	newStudentsArr := make([]Group, 0)
 	return &App{
-		groups: &newStudentsArr,
-		r:      mux.NewRouter(),
+		router:   mux.NewRouter(),
+		database: NewDatabase(),
+		userAuth: NewUserAuthenticator(context.Background()),
 	}
 }
 
 // Start runs the app.
-func (a *App) Start() {
-	a.r.HandleFunc("/groups", a.getAllGroups).Methods("GET")
-	a.r.HandleFunc("/groups", a.createGroup).Methods("POST")
-	a.r.PathPrefix("/").Handler(http.FileServer(http.Dir("./web")))
-	log.Fatal(http.ListenAndServe(":8080", a.r))
+func (app *App) Start(port int) {
+	fmt.Println("Running on localhost:" + strconv.Itoa(port))
+	// app.router.HandleFunc("/groups", app.getAllGroups).Methods("GET")
+	apiRouter := app.router.PathPrefix("/api").Subrouter()
+	apiRouter.Use(app.UserAuthentication)
+	apiRouter.HandleFunc("/dummy", app.Dummy)
+	apiRouter.HandleFunc("/profile", app.GetCurrentUser).Methods("GET")
+	app.router.PathPrefix("/").Handler(http.FileServer(http.Dir("./web")))
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), app.router))
 }
 
-func (a *App) getAllGroups(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	err := json.NewEncoder(w).Encode(a.groups)
-	if err != nil {
+// A DummyMessage contains text content.
+type DummyMessage struct {
+	Content string
+}
+
+// Dummy send a Hello string. This is mostly for debugging.
+func (app *App) Dummy(w http.ResponseWriter, r *http.Request) {
+	mes := DummyMessage{
+		Content: "Rodrigo",
+	}
+	if err := json.NewEncoder(w).Encode(mes); err != nil {
 		sendErr(w, http.StatusInternalServerError, err.Error())
 	}
-}
-
-func (a *App) createGroup(w http.ResponseWriter, r *http.Request) {
-	var g Group
-	err := json.NewDecoder(r.Body).Decode(&g)
-	if err != nil {
-		sendErr(w, http.StatusBadRequest, err.Error())
-		return
-	}
-	newGroups := append(*a.groups, g)
-	a.groups = &newGroups
 }
 
 func sendErr(w http.ResponseWriter, code int, message string) {

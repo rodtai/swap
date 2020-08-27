@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, auth } from 'firebase';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +31,10 @@ export class UserService {
 
   public getCurrentUser(): User {
     return this.currentUser;
+  }
+
+  public getCurrentUserToken(): Observable<string> {
+    return from(this.currentUser.getIdToken());
   }
 
   public getUserById(userId: string): User {
