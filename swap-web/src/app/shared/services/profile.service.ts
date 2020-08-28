@@ -1,4 +1,4 @@
-import { Profile, CreatedProfile } from './../models/profile.model';
+import { Profile } from './../models/profile.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -14,8 +14,8 @@ export class ProfileService {
   }
 
   public createMyUserProfile(
-    createdProfile: CreatedProfile,
+    createdProfile: Profile,
   ): Observable<Profile> {
-    return this.http.post<Profile>('/api/profile', {});
+    return this.http.post<Profile>('/api/profile', createdProfile);
   }
 }

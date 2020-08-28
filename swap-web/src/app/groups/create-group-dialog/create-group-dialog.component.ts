@@ -14,6 +14,11 @@ export class CreateGroupDialogComponent implements OnInit {
   ngOnInit(): void {}
 
   public onCreate(): void {
-    this.groupService.createGroup(this.groupName);
+    this.groupService.createGroup({
+      id: '',
+      name: this.groupName,
+      adminId: '',
+      groupIcon: '',
+    });
   }
 }

@@ -1,9 +1,9 @@
+import { Group } from './../shared/models/group.model';
 import { CreateGroupDialogComponent } from './create-group-dialog/create-group-dialog.component';
 import { GroupService } from './../shared/services/group.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Group } from '../shared/models/group.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -25,11 +25,7 @@ export class GroupsComponent implements OnInit {
   );
 
   public ngOnInit(): void {
-    this.groups = this.groupSerivce.getGroups().pipe(
-      map(groupResponse => {
-        return groupResponse;
-      }),
-    );
+    this.groups = this.groupSerivce.getGroups();
   }
 
   public drop(event: CdkDragDrop<Group[]>): void {

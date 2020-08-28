@@ -1,9 +1,7 @@
 import { ProfileService } from './../shared/services/profile.service';
-import {
-  Profile,
-  CreatedProfile,
-} from './../shared/models/profile.model';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Profile } from './../shared/models/profile.model';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-profile',
@@ -16,7 +14,10 @@ export class CreateProfileComponent implements OnInit {
   whatIDo: string;
   profilePicture: string;
 
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(
+    private readonly profileService: ProfileService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {}
 
@@ -38,12 +39,15 @@ export class CreateProfileComponent implements OnInit {
   }
 
   public createProfile(): void {
-    const createdProfile: CreatedProfile = {
+    const profile: Profile = {
+      id: null,
       fullName: this.fullName,
       displayName: this.displayName,
       description: this.whatIDo,
       profilePicture: this.profilePicture,
     };
-    this.profileService.createMyUserProfile(createdProfile);
+    this.profileService.createMyUserProfile(profile).subscribe(() => {
+      this.router.navigate(['/groups']);
+    });
   }
 }

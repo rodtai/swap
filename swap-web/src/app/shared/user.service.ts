@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User, auth } from 'firebase';
 import { Observable, from } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +35,11 @@ export class UserService {
   }
 
   public getCurrentUserToken(): Observable<string> {
-    return from(this.currentUser.getIdToken());
+    return this.fireAuth.user.pipe(
+      mergeMap((user: User) => {
+        return from(user.getIdToken());
+      }),
+    );
   }
 
   public getUserById(userId: string): User {

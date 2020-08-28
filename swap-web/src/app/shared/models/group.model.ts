@@ -1,6 +1,6 @@
 export interface Group {
   id: string;
   name: string;
-  icon: string;
-  chatIds: string[];
+  groupIcon: string;
+  adminId: string;
 }

@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/mux v1.7.4
 	github.com/jinzhu/gorm v1.9.16
+	github.com/scylladb/gocqlx v1.5.0
 	github.com/scylladb/gocqlx/v2 v2.1.0
 	golang.org/x/net v0.0.0-20200813134508-3edf25e44fcc
 	google.golang.org/api v0.30.0 // indirect

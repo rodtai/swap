@@ -14,6 +14,7 @@ type User struct {
 	DisplayName    string `json:"displayName"`
 	Description    string `json:"description"`
 	ProfilePicture string `json:"profilePicture"`
+	NumGroups      int    `json:"-"`
 }
 
 // GetCurrentUser gets the current user's data.
@@ -22,10 +23,15 @@ func (app *App) GetCurrentUser(w http.ResponseWriter, r *http.Request) {
 	user, err := app.database.SelectUserByID(userID)
 	if err != nil {
 		if err.Error() == gocql.ErrNotFound.Error() {
+			// If the user cannot be found in the db, store the user from Firebase
 			firebaseUser, firebaseErr := app.userAuth.GetUser(r.Context(), userID)
 			if firebaseErr != nil {
 				sendErr(w, http.StatusInternalServerError, firebaseErr.Error())
 				return
+			}
+			databaseErr := app.database.InsertUser(*firebaseUser)
+			if databaseErr != nil {
+				sendErr(w, http.StatusInternalServerError, databaseErr.Error())
 			}
 			user = firebaseUser
 		} else {
@@ -43,6 +49,7 @@ func (app *App) PostNewUser(w http.ResponseWriter, r *http.Request) {
 		sendErr(w, http.StatusBadRequest, err.Error())
 		return
 	}
+	// set user ID to ID stored in context
 	user.ID = r.Context().Value(UserUID).(string)
 	if err := app.database.InsertUser(user); err != nil {
 		sendErr(w, http.StatusBadRequest, err.Error())
@@ -78,4 +85,13 @@ func (db *Database) SelectUserByID(id string) (*User, error) {
 		return &user, err
 	}
 	return &user, nil
+}
+
+// UpdateUserByID updates a new user.
+func (db *Database) UpdateUserByID(user User) error {
+	query := db.currentSession.Query(db.userTable.Update("num_groups")).BindStruct(user)
+	if err := query.ExecRelease(); err != nil {
+		return err
+	}
+	return nil
 }

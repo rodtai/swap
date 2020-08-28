@@ -3,13 +3,15 @@
     id="profile-pic"
     *ngIf="!(profile | async).profilePicture; else showProfilePicture"
   >
-    <span id="profile-pic-text">{{ (profile | async).name[0] }}</span>
+    <span id="profile-pic-text">{{
+      (profile | async).displayName[0]
+    }}</span>
   </div>
   <ng-template #showProfilePicture>
     <img id="profile-pic" [src]="(profile | async).profilePicture" />
   </ng-template>
   <div id="user-identifiers">
-    <span id="name">{{ (profile | async).name }}</span>
+    <span id="name">{{ (profile | async).displayName }}</span>
     <span id="id">{{ (profile | async).id }}</span>
   </div>
 </div>

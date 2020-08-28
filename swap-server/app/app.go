@@ -30,28 +30,14 @@ func NewApp() *App {
 // Start runs the app.
 func (app *App) Start(port int) {
 	fmt.Println("Running on localhost:" + strconv.Itoa(port))
-	// app.router.HandleFunc("/groups", app.getAllGroups).Methods("GET")
 	apiRouter := app.router.PathPrefix("/api").Subrouter()
 	apiRouter.Use(app.UserAuthentication)
-	apiRouter.HandleFunc("/dummy", app.Dummy)
 	apiRouter.HandleFunc("/profile", app.GetCurrentUser).Methods("GET")
+	apiRouter.HandleFunc("/profile", app.PostNewUser).Methods("POST")
+	apiRouter.HandleFunc("/groups", app.PostNewGroup).Methods("POST")
+	apiRouter.HandleFunc("/groups", app.GetGroups).Methods("GET")
 	app.router.PathPrefix("/").Handler(http.FileServer(http.Dir("./web")))
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), app.router))
-}
-
-// A DummyMessage contains text content.
-type DummyMessage struct {
-	Content string
-}
-
-// Dummy send a Hello string. This is mostly for debugging.
-func (app *App) Dummy(w http.ResponseWriter, r *http.Request) {
-	mes := DummyMessage{
-		Content: "Rodrigo",
-	}
-	if err := json.NewEncoder(w).Encode(mes); err != nil {
-		sendErr(w, http.StatusInternalServerError, err.Error())
-	}
 }
 
 func sendErr(w http.ResponseWriter, code int, message string) {

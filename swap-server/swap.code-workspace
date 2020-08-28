@@ -10,7 +10,12 @@
 			[
 				"Cluster AllowAllAuthenticator",
 				"swap"
+			],
+			[
+				"Cluster PasswordAuthenticator",
+				"swap"
 			]
-		]
+		],
+		"cassandraWorkbench.splitPosition": 50.512125693439415
 	}
 }

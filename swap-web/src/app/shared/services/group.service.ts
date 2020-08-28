@@ -3,9 +3,11 @@ import { Message, Media } from './../models/message.model';
 import { Chat } from './../models/chat.model';
 import { Group } from './../models/group.model';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable, BehaviorSubject } from 'rxjs';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { first } from 'rxjs/operators';
+import { group } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root',
@@ -15,27 +17,6 @@ export class GroupService {
     private readonly http: HttpClient,
     private readonly userService: UserService,
   ) {}
-
-  private allGroups: Group[] = [
-    {
-      id: '1',
-      name: 'Group 1',
-      icon: 'assets/groups/group1.svg',
-      chatIds: [],
-    },
-    {
-      id: '2',
-      name: 'Group 2',
-      icon: 'assets/groups/group2.svg',
-      chatIds: ['1', '2', '3'],
-    },
-    {
-      id: '1',
-      name: 'Group 3',
-      icon: 'assets/groups/group3.svg',
-      chatIds: [],
-    },
-  ];
 
   private allChats: Chat[][] = [
     [
@@ -91,22 +72,24 @@ export class GroupService {
     },
   ]);
 
-  private groups: BehaviorSubject<Group[]> = new BehaviorSubject(
-    this.allGroups,
-  );
+  private groups: BehaviorSubject<Group[]> = new BehaviorSubject([]);
 
   public getGroups(): Observable<Group[]> {
+    this.http
+      .get<Group[]>('/api/groups')
+      .subscribe((groups: Group[]) => {
+        this.groups.next(groups);
+      });
     return this.groups;
   }
 
-  public createGroup(groupName: string): void {
-    const groups = this.groups.value;
-    groups.push({
-      id: '123',
-      name: groupName,
-      icon: null,
-      chatIds: [],
-    });
+  public createGroup(group: Group): void {
+    this.http
+      .post('/api/groups', group)
+      .pipe(first())
+      .subscribe((groupCreated: Group) => {
+        this.groups.value.push(groupCreated);
+      });
   }
 
   public moveGroup(prevIndex: number, currIndex: number): void {
@@ -117,7 +100,7 @@ export class GroupService {
   public getChatsForGroup(
     group: Group,
   ): Observable<{ chats: Chat[] }> {
-    const idx = this.allGroups.findIndex(g => g.id === group.id);
+    const idx = this.groups.value.findIndex(g => g.id === group.id);
     return of({ chats: this.allChats[idx] });
   }
 

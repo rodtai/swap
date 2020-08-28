@@ -1,8 +1,5 @@
-export interface Profile extends CreatedProfile {
+export interface Profile {
   id: string;
-}
-
-export interface CreatedProfile {
   fullName: string;
   displayName: string;
   description: string;

@@ -16,6 +16,7 @@ const (
 
 // UserAuthentication authenticates user and adds its UID to the context
 func (app *App) UserAuthentication(next http.Handler) http.Handler {
+	fmt.Println("Verifying...")
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := strings.Split(r.Header.Get("Authorization"), "Bearer ")
 		if len(authHeader) != 2 {
@@ -26,8 +27,8 @@ func (app *App) UserAuthentication(next http.Handler) http.Handler {
 			jwtToken := authHeader[1]
 			token, err := app.userAuth.VerifyIDToken(context.Background(), jwtToken)
 			if err == nil {
-				fmt.Println(token.UID)
 				ctx := context.WithValue(context.Background(), UserUID, token.Subject)
+				fmt.Println("Verified")
 				next.ServeHTTP(w, r.WithContext(ctx))
 			} else {
 				fmt.Println(err)
